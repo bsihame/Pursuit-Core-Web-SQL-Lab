@@ -111,3 +111,56 @@ SELECT name, role FROM employees WHERE building is null
 2. Find the names of the buildings that hold no employees
 SELECT DISTINCT building_name FROM buildings LEFT JOIN employees ON building_name = building WHERE role IS NULL;
 ==================================================================
+QL Lesson 10: Queries with aggregates (Pt. 1)
+
+Exercise 10 - Tasks
+
+1. Find the longest time that an employee has been at the studio
+SELECT Name, MAX(Years_employed) AS Longest_Time
+FROM Employees
+
+2. For each role, find the average number of years employed by employees in that role
+SELECT Role, AVG(Years_employed)
+FROM Employees
+GROUP BY Role
+
+3. Find the total number of employee years worked in each building
+SELECT Building, SUM(Years_employed)
+FROM Employees
+GROUP BY Building
+
+====================================================================
+SQL Lesson 11: Queries with aggregates (Pt. 2)
+
+Exercise 11 - Tasks
+1. Find the number of Artists in the studio (without a HAVING clause)
+SELECT COUNT(ROLE)
+FROM employees
+WHERE Role = 'Artist'
+
+2. Find the number of Employees of each role in the studio
+SELECT Role, COUNT(ROLE) AS Number_of_Employees
+FROM employees
+GROUP BY Role
+
+3. Find the total number of years employed by all Engineers
+SELECT Role, SUM(Years_employed) 
+FROM employees
+GROUP BY Role
+HAVING Role = 'Engineer'
+====================================================================
+SQL Lesson 12: Order of execution of a Query
+
+Exercise 12 — Tasks
+
+1. Find the number of movies each director has directed
+SELECT Director, COUNT(*) AS Number_of_movies
+FROM movies
+GROUP BY Director;
+2. Find the total domestic and international sales that can be attributed to each director
+SELECT Director, 
+    SUM(Domestic_sales + International_sales) AS Total_Sales
+FROM movies
+INNER JOIN Boxoffice
+ON movies.Id = Boxoffice.Movie_id
+GROUP BY Director;
